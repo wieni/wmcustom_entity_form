@@ -2,11 +2,13 @@
 
 namespace Drupal\wmcustom_entity_form;
 
+use Drupal\Component\Plugin\Attribute\AttributeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\wmcustom_entity_form\Annotation\EntityForm;
+use Drupal\wmcustom_entity_form\Attribute\EntityForm as EntityFormAttribute;
 
 class CustomEntityFormManager extends DefaultPluginManager
 {
@@ -15,12 +17,18 @@ class CustomEntityFormManager extends DefaultPluginManager
         CacheBackendInterface $cacheBackend,
         ModuleHandlerInterface $moduleHandler
     ) {
+        // Drupal 10.2 added attribute discovery, taking the attribute class
+        // before the annotation class; leaving it out is deprecated since 11.2.
+        $definitionClasses = interface_exists(AttributeInterface::class)
+            ? [EntityFormAttribute::class, EntityForm::class]
+            : [EntityForm::class];
+
         parent::__construct(
             'Form/Entity',
             $namespaces,
             $moduleHandler,
             EntityFormInterface::class,
-            EntityForm::class
+            ...$definitionClasses
         );
         $this->alterInfo('custom_entity_form');
         $this->setCacheBackend($cacheBackend, 'custom_entity_form_plugins');

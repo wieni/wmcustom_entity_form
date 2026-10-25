@@ -12,6 +12,7 @@
     "prefer-stable": true,
     "type": "drupal-module",
     "require": {
-        "php": "^7.1 || ^8.0"
+        "php": ">=8.2",
+        "drupal/core": "^11.4"
     }
 }

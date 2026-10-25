@@ -13,6 +13,6 @@
     "type": "drupal-module",
     "require": {
         "php": ">=8.2",
-        "drupal/core": "^11.4"
+        "drupal/core": "^11.4 || ^12"
     }
 }

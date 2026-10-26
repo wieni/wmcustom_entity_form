@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\wmcustom_entity_form\Annotation\EntityForm;
+use Drupal\wmcustom_entity_form\Attribute\EntityForm as EntityFormAttribute;
 
 class CustomEntityFormManager extends DefaultPluginManager
 {
@@ -20,6 +21,7 @@ class CustomEntityFormManager extends DefaultPluginManager
             $namespaces,
             $moduleHandler,
             EntityFormInterface::class,
+            EntityFormAttribute::class,
             EntityForm::class
         );
         $this->alterInfo('custom_entity_form');
